@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imgs\coins.png" type="image/x-icon">
+    <title>Lançamento de Transações</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-container">
+          <a href="index.html" class="logo">
+            <img src="imgs/coins.png" alt="Logo" class="logo-img">
+            <span class="logo-text">Controle Financeiro</span>
+          </a>
+      
+          <nav class="main-nav" id="mainNav">
+            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNavLinks">
+              <span class="hamburger-icon"></span>
+            </button>
+            <ul class="nav-links" id="mainNavLinks">
+              <li><a href="index.html" class="nav-link">Lançamentos</a></li>
+              <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+      
+      
+
+    <main>
+        <section id="lancamento-form-section">
+          <center><h1>Nova Transação</h1></center> 
+            <form id="transactionForm">
+                <div>
+                    <label for="valor">Valor (R$):</label>
+                    <input type="text" id="valor" name="valor" inputmode="decimal" required>
+                </div>
+                <div>
+                    <label for="dataTransacao">Data da Transação:</label>
+                    <input type="date" id="dataTransacao" name="dataTransacao" required>
+                </div>
+
+                <div>
+                    <label for="tipoTransacao">Tipo de Transação:</label>
+                    <select id="tipoTransacao" name="tipoTransacao" required>
+                        <option value="Gasto">Gasto</option>
+                        
+                        <!-- <option value="Receita">Receita</option> -->
+                        <!-- <option value="DividaAdquirida">Dívida Adquirida</option> -->
+                        <!-- <option value="PagamentoDivida">Pagamento de Dívida</option> -->
+                    </select>
+                </div>
+
+                <div>
+                    <label for="categoria">Categoria:</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Transporte">Transporte</option>
+                        <option value="Lazer">Lazer</option>
+                        <option value="Educação">Educação</option>
+                        
+                        <option value="420">420</option>
+                        <option value="420Kit">420 Kit</option>
+                        <option value="Álcool">Álcool</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="metodoPagamento">Método de Pagamento:</label>
+                    <select id="metodoPagamento" name="metodoPagamento" required>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="PIX">PIX</option>
+                        <option value="pixcreditonubank">PIX Crédito Nubank</option>
+                        <option value="cartaosantander">Cartão Santander</option>
+                        <option value="cartaoitaublack">Cartão Itaú Black</option>
+                        <option value="cartaoxp">Cartão XP</option>
+                        <option value="cartaonubankcred">Cartão Nubank - Crédito</option>
+                        <option value="cartaonubankdeb">Cartão Nubank - Débito</option>
+                        <option value="cartaopicpay">Cartão PicPay - Crédito</option>
+                        <option value="cartaobtg">Cartão BTG - Débito</option>
+                        
+                    </select>
+                </div>
+
+                <div>
+                    <label for="descricao">Descrição:</label>
+                    <textarea id="descricao" name="descricao" rows="3"></textarea>
+                </div>
+
+                <button type="submit">Salvar Transação</button>
+            </form>
+            <p id="feedbackMessage"></p>
+        </section>
+        <section id="lancamentos-anteriores-section">
+            <h2>Lançamentos Anteriores</h2>
+        
+            <div class="filtros-tabela-container">
+                <div class="filtro-item-tabela">
+                    <label for="filtroInicio">De:</label>
+                    <input type="date" id="filtroInicio">
+                </div>
+                <div class="filtro-item-tabela">
+                    <label for="filtroFim">Até:</label>
+                    <input type="date" id="filtroFim">
+                </div>
+                <div class="botoes-filtro-tabela">
+                    <button id="btnFiltrarLancamentos" class="btn-primario">Filtrar</button>
+                    <button id="btnLimparFiltroLancamentos" class="btn-secundario">Limpar Filtro</button>
+                </div>
+            </div>
+        
+            <div class="tabela-wrapper">
+                <table id="tabelaLancamentos">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Método Pag.</th>
+                            <th>Valor (R$)</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaLancamentos">
+                        <tr><td colspan="6" style="text-align:center;">Carregando lançamentos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        
+            <!-- ✅ Controles de paginação (aparece dinamicamente) -->
+            <div id="paginacaoLancamentos" class="paginacao-container">
+                <!-- JavaScript insere os botões aqui -->
+            </div>
+        </section>
+        
+    </main>
+
+
+    <!-- index.html ou dashboard.html -->
+    <footer class="site-footer-minimal">
+        <div class="container">
+            <p>© 2025 / Arthur Santana</p>
+            <!-- Opcional: Pequenos links ou ícones -->
+            <!-- <div class="footer-minimal-links">
+                <a href="#">Sobre</a> • <a href="#">Contato</a>
+            </div> -->
+        </div>
+    </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navToggle = document.querySelector('.nav-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        const navLinks = document.querySelectorAll('.nav-link');
+      
+        if (navToggle && mainNav) {
+          navToggle.addEventListener('click', function () {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            mainNav.classList.toggle('nav-open');
+          });
+      
+          navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+              mainNav.classList.remove('nav-open');
+              navToggle.setAttribute('aria-expanded', false);
+            });
+          });
+        } else {
+          console.warn("navToggle ou mainNav não encontrados.");
+        }
+      });
+      
+
+    </script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+    
+</body>
+</html>

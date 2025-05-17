@@ -1,0 +1,902 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #ecf0f1;
+    color: #333;
+}
+
+/* ==========================================================================
+   Estilos Globais e Utilitários (Se necessário)
+   ========================================================================== */
+   .container {
+    width: 90%;
+    max-width: 1140px; /* Largura máxima comum para containers */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.paginacao-container {
+    text-align: center;
+    margin-top: 15px;
+}
+td button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+td button svg {
+    pointer-events: none;
+}
+.paginacao-container button {
+    margin: 0 5px;
+    padding: 6px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.paginacao-container button:hover {
+    background-color: #e0e0e0;
+}
+
+/* ==========================================================================
+   Header Moderno e Responsivo
+   ========================================================================== */
+.site-header {
+    background-color: #2c3e50;
+  padding: 10px 0; /* Reduzido */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e9ecef;
+
+}
+
+.header-container {
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.logo a {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    font-weight: 700;
+    color: #ecf0f1;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  .logo-img {
+    height: 1.4em;
+    margin-right: 6px;
+    display: inline-block;
+  }
+  
+  @media (max-width: 480px) {
+    .logo a {
+      font-size: 1.3em;
+    }
+    .logo-img {
+      height: 1.2em;
+    }
+  }
+  
+
+
+
+
+.main-nav .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Links lado a lado em telas maiores */
+}
+
+.main-nav .nav-links li {
+    margin-left: 25px; /* Espaçamento entre links */
+}
+
+.main-nav .nav-link {
+    text-decoration: none;
+    color: #ecf0f1; /* Cor dos links */
+    font-weight: 500;
+    padding: 8px 0; /* Padding para área de clique e borda inferior */
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.main-nav .nav-link::after { /* Efeito de sublinhado animado no hover */
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #0d6efd; /* Cor do sublinhado */
+    transition: width 0.3s ease;
+}
+
+.main-nav .nav-link:hover,
+.main-nav .nav-link.active { /* Classe 'active' para a página atual */
+    color: #0d6efd;
+}
+.main-nav .nav-link:hover::after,
+.main-nav .nav-link.active::after {
+    width: 100%;
+}
+
+/* Botão Hamburger para Telas Pequenas */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .hamburger-icon {
+    width: 20px;
+    height: 2px;
+    background-color: #ecf0f1;
+    position: relative;
+  }
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ecf0f1;
+  }
+  .hamburger-icon::before {
+    top: -6px;
+  }
+  .hamburger-icon::after {
+    top: 6px;
+  }
+  
+  /* Animação para "X" */
+  .nav-toggle[aria-expanded="true"] .hamburger-icon {
+    background-color: transparent;
+  }
+  .nav-toggle[aria-expanded="true"] .hamburger-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  .nav-toggle[aria-expanded="true"] .hamburger-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+  
+  /* RESPONSIVO */
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: block;
+    }
+  
+    .main-nav .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 75%;
+      max-width: 280px;
+      height: 100vh;
+      background-color: #fff;
+      flex-direction: column;
+      padding: 70px 20px 20px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+      transition: right 0.4s ease-in-out;
+    }
+  
+    .main-nav.nav-open .nav-links {
+      right: 0;
+    }
+  
+    .main-nav .nav-links li {
+      margin-bottom: 20px;
+    }
+  
+    .main-nav .nav-link {
+      font-size: 1.1em;
+      color: #2c3e50;
+    }
+  }
+  .hamburger-icon,
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    background-color: #ecf0f1 !important;
+  }
+  
+/* ==========================================================================
+   Footer Minimalista
+   ========================================================================== */
+   .site-footer-minimal {
+    background-color: #2c3e50; /* Fundo muito claro, quase branco */
+    color: #7f8c8d;       /* Texto cinza sutil */
+    padding: 30px 0;
+    text-align: center;
+    font-size: 0.875em;
+    border-top: 1px solid #e9ecef; /* Linha divisória sutil no topo */
+    margin-top: 50px;
+}
+
+.site-footer-minimal .container p {
+    margin: 0 0 10px; /* Pequena margem abaixo do texto principal */
+}
+
+/* Estilo opcional para links pequenos */
+.footer-minimal-links a {
+    color: #6c757d;
+    text-decoration: none;
+    margin: 0 8px;
+    font-size: 0.9em;
+}
+.footer-minimal-links a:hover {
+    color: #0d6efd; /* Cor de destaque no hover */
+}
+/* Adicione Font Awesome se for usar ícones i.fab */
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    max-width: 700px;
+    margin: 20px auto;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#lancamento-form-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#transactionForm div {
+    margin-bottom: 15px;
+}
+
+#transactionForm label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#transactionForm input[type="number"],
+#transactionForm input[type="text"], 
+#transactionForm input[type="date"],
+#transactionForm select,
+#transactionForm textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Importante para o padding não aumentar a largura total */
+}
+
+#transactionForm textarea {
+    resize: vertical;
+}
+
+#transactionForm button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#transactionForm button[type="submit"]:hover {
+    background: #0d6efd;
+}
+
+#feedbackMessage {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+
+
+/* ... (seus estilos existentes) ... */
+#resumo-mes-atual.dashboard-section {
+    background-color: #f8f9fa;
+}
+#uso-cartoes.dashboard-section {
+    background-color: #f8f9fa;
+}
+#o-que-posso-gastar.dashboard-section {
+    background-color: #f8f9fa;
+}
+.dashboard-section canvas {
+    max-width: 100%; /* Garante que não ultrapasse o contêiner pai */
+    background-color: #f8f9fa;
+}
+
+#gastos-por-categoria,
+#comparativo-mensal {
+    /* Defina uma altura máxima ou uma altura fixa para a seção do gráfico */
+    /* Exemplo com altura máxima: */
+    height: 450px; /* Tente um valor maior, ex: 450px ou 480px */
+    /* ou use min-height se preferir */
+    /* min-height: 450px; */
+    position: relative;
+    width: 100%;
+    padding: 20px; /* Mantém o padding */
+    box-sizing: border-box; /* Importante para o Chart.js calcular o tamanho corretamente */
+    background-color: #f8f9fa;
+    overflow: hidden;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+
+/* ==========================================================================
+   Estilos para Seção de Lançamentos Anteriores (index.html)
+   ========================================================================== */
+
+   #lancamentos-anteriores-section {
+    background-color: #fff;
+    padding: 20px 25px;
+    margin-top: 30px; /* Espaço acima desta seção */
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    border: 1px solid #e7e7e7;
+}
+
+#lancamentos-anteriores-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    color: #343a40;
+    font-weight: 500;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+.filtros-tabela-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem em telas menores */
+    align-items: flex-end; /* Alinha os itens pela base */
+    gap: 15px; /* Espaço entre os itens de filtro e o grupo de botões */
+    margin-bottom: 20px;
+}
+
+.filtro-item-tabela {
+    display: flex;
+    flex-direction: column; /* Label em cima, input embaixo */
+    flex-grow: 1; /* Faz os inputs de data tentarem ocupar espaço */
+    min-width: 180px; /* Largura mínima para cada input de data */
+}
+
+.filtro-item-tabela label {
+    margin-bottom: 5px;
+    font-size: 0.875em;
+    font-weight: 500;
+    color: #495057;
+}
+
+.filtro-item-tabela input[type="date"] {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 0.95em;
+    background-color: #fff;
+    box-sizing: border-box;
+    width: 100%; /* Ocupa a largura do .filtro-item-tabela */
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.075);
+}
+.filtro-item-tabela input[type="date"]:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.botoes-filtro-tabela {
+    display: flex;
+    gap: 10px; /* Espaço entre os botões Filtrar e Limpar */
+    margin-left: auto; /* Tenta empurrar os botões para a direita se houver espaço */
+                      /* Em telas pequenas, eles podem quebrar para a próxima linha */
+}
+
+/* Estilos genéricos para botões (podem ser reutilizados) */
+.btn-primario, .btn-secundario {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    text-align: center;
+}
+
+.btn-primario {
+    background-color: #0d6efd; /* Azul Bootstrap */
+    color: white;
+}
+.btn-primario:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-secundario {
+    background-color: #6c757d; /* Cinza Bootstrap */
+    color: white;
+}
+.btn-secundario:hover {
+    background-color: #5a6268;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Wrapper para a tabela para permitir rolagem horizontal em telas pequenas */
+.tabela-wrapper {
+    overflow-x: auto; /* Adiciona barra de rolagem horizontal se a tabela for muito larga */
+    margin-top: 10px;
+}
+
+#tabelaLancamentos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+#tabelaLancamentos th, #tabelaLancamentos td {
+    border: 1px solid #dee2e6;
+    padding: 10px 12px; /* Padding aumentado para melhor leitura */
+    text-align: left;
+    vertical-align: middle;
+}
+
+#tabelaLancamentos thead th {
+    background-color: #f8f9fa;
+    font-weight: 600; /* Cabeçalho em negrito */
+    color: #495057;
+}
+
+#tabelaLancamentos tbody tr:nth-child(odd) {
+    background-color: #fdfdfe; /* Zebrado sutil para linhas ímpares */
+}
+#tabelaLancamentos tbody tr:hover {
+    background-color: #f1f3f5; /* Efeito hover na linha */
+}
+
+/* Botões de ação na tabela (com ícones) */
+#tabelaLancamentos .btn-editar,
+#tabelaLancamentos .btn-excluir {
+    background: none;
+    border: none;
+    padding: 5px; /* Padding ajustado para ícones */
+    cursor: pointer;
+    color: #495057;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5px;
+    transition: color 0.2s ease;
+}
+#tabelaLancamentos .btn-editar:hover { color: #0d6efd; }
+#tabelaLancamentos .btn-excluir:hover { color: #dc3545; }
+
+#tabelaLancamentos .btn-editar svg,
+#tabelaLancamentos .btn-excluir svg {
+    width: 16px; /* Tamanho dos ícones */
+    height: 16px;
+}
+
+/* style.css ou <style> no dashboard.html */
+/* style.css ou <style> no dashboard.html */
+
+#filtros-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08); /* Sombra um pouco mais suave */
+}
+
+#filtros-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.25em; /* Um pouco menor para não dominar */
+    border-bottom: 1px solid #e9ecef; /* Linha mais suave */
+    padding-bottom: 10px;
+    color: #343a40; /* Cor do título */
+}
+
+.filtros-linha {
+    display: flex;     /* Itens dentro desta linha ficarão lado a lado */
+    align-items: flex-end; /* Alinha os itens na base (bom para inputs de alturas diferentes) */
+    gap: 15px;         /* Espaço entre os 'filtro-item' */
+    margin-bottom: 15px; /* Espaço entre as linhas de filtro */
+}
+
+.filtros-linha:last-child { /* Remove margem inferior da última linha de filtros (onde está o botão) */
+    margin-bottom: 0;
+}
+
+
+.filtro-item {
+    display: flex;
+    flex-direction: column; /* Label em cima, input/select embaixo */
+    /* flex-grow: 1; */ /* Descomente se quiser que os itens tentem preencher o espaço horizontalmente */
+    /* min-width: 150px; */ /* Opcional: define uma largura mínima para cada item de filtro */
+}
+
+.filtro-item label {
+    margin-bottom: 5px;
+    font-size: 0.875em; /* Tamanho de fonte dos labels */
+    font-weight: 500;
+    color: #495057;
+}
+
+/* Estilo para todos os selects e inputs de data dentro dos filtros */
+#filtros-section select,
+#filtros-section input[type="date"] {
+    padding: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 0.9em;
+    background-color: #fff;
+    box-sizing: border-box; /* Importante para o padding não aumentar a largura total */
+    width: 100%; /* Faz com que o input/select ocupe toda a largura do .filtro-item */
+                 /* Se .filtro-item tiver flex-grow:1, eles se ajustarão */
+}
+
+/* Para o select "Tipo de Filtro" ocupar mais espaço se for o único na linha */
+.filtros-linha > .filtro-item:only-child select {
+    min-width: 250px;  /* Ou defina uma largura específica maior */
+}
+/* Se quiser que os inputs de Mês/Ano tenham larguras diferentes: */
+/* #mesFiltro { width: 180px; } */
+/* #anoFiltro { width: 120px; } */
+
+
+#filtros-section button#aplicarFiltro {
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease;
+    /* O botão agora está em sua própria .filtros-linha, então não precisa de margin-top aqui */
+}
+
+#filtros-section button#aplicarFiltro:hover {
+    background-color: #0d6efd;
+}
+
+/* style.css ou <style> no dashboard.html */
+
+.cartao-uso-item { /* Assumindo que você usará esta classe para ambos os tipos de card no JS */
+    background-color: #fff; /* Fundo branco para os cards */
+    border: 1px solid #e9ecef; /* Borda sutil para os cards */
+    border-radius: 8px;
+    padding: 18px 20px; /* Padding interno do card */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.06); /* Sombra mais suave */
+}
+/* Se houver uma classe específica para erro de configuração */
+.cartao-uso-item.cartao-config-erro {
+    border-left: 4px solid #dc3545; /* Destaque vermelho para erro */
+}
+
+
+/* Contêiner para as informações textuais do cartão */
+.cartao-uso-item .cartao-info {
+    margin-bottom: 12px; /* Espaço antes da barra de progresso */
+    border: none;
+}
+
+.cartao-uso-item .cartao-info strong {
+    font-size: 1.15em; /* Nome do cartão um pouco maior */
+    color: #212529; /* Preto mais suave */
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* Estilo para textos menores como ciclo, limite total, etc. */
+.cartao-uso-item .cartao-info .ciclo-info,   /* Para "Uso de Cartões" */
+.cartao-uso-item .cartao-info .detalhe-limite { /* Para "O Que Posso Gastar" */
+    font-size: 0.8em;
+    color: #6c757d; /* Cinza mais escuro para subtextos */
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+/* Para as linhas de Gasto/Limite/Disponível */
+.cartao-uso-item .cartao-info span {
+    display: block;
+    font-size: 0.95em; /* Tamanho consistente para os valores */
+    color: #495057;
+    line-height: 1.5;
+    margin-bottom: 3px; /* Pequeno espaço entre as linhas de detalhe */
+}
+.cartao-uso-item .cartao-info span:last-of-type,
+.cartao-uso-item .cartao-info .detalhe-limite:last-of-type { /* Se for o último elemento textual antes da barra */
+    margin-bottom: 0;
+}
+
+
+/* Barra de Progresso - Wrapper (Trilha) */
+.progress-bar-wrapper {
+    width: 100%;
+    background-color: #e9ecef;  /* Cinza claro para a trilha */
+    border-radius: 10px;        /* Arredondamento consistente */
+    height: 26px;               /* Altura consistente */
+    position: relative;
+    overflow: hidden;
+    margin-top: 12px;           /* Espaço consistente acima da barra */
+    box-sizing: border-box;
+    /* Sem borda na wrapper para o visual limpo que você queria */
+}
+
+/* Barra de Progresso - Filled (Preenchimento Colorido) */
+.progress-bar-filled {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: inherit;     /* Herda o mesmo border-radius da wrapper */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;             /* Texto do percentual em BRANCO para melhor contraste */
+    font-size: 0.875em;      /* Ajuste fino no tamanho da fonte */
+    font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.2); /* Sombra para legibilidade sobre cores claras/escuras */
+
+    transition: width 0.4s ease-in-out, background-color 0.4s ease-in-out;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+/* Garante que logo + texto fiquem na mesma linha e não quebrem */
+.logo a {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    font-size: 1.0em;
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: 700;
+    gap: 8px;
+  }
+  
+  .logo-img {
+    height: 1.0em;
+    flex-shrink: 0;
+  }
+  
+  .logo-text {
+    white-space: nowrap;
+  }
+  
+  /* Corrige cor do ícone do menu */
+  .hamburger-icon,
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    background-color: #ecf0f1 !important;
+  }
+  
+  /* Reduz tamanho da fonte e imagem no mobile */
+  @media (max-width: 480px) {
+    .logo a {
+      font-size: 1.2em;
+    }
+  
+    .logo-img {
+      height: 1.2em;
+    }
+  }
+  .logo a {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  
+  .logo-text {
+    white-space: nowrap;
+    font-size: 1.3em;
+  }
+  
+  .logo-img {
+    height: 1.2em;
+    max-height: 32px;
+    width: auto;
+    flex-shrink: 0;
+  }
+  @media (max-width: 375px) {
+    .logo a {
+      font-size: 1.1em;
+    }
+    .logo-img {
+      height: 1.1em;
+    }
+  }
+    
+  /* Header e logo */
+.site-header {
+    background-color: #2c3e50;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    white-space: nowrap;
+    gap: 8px;
+    color: #ecf0f1;
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+  
+  .logo-img {
+    height: 1.4em;
+    flex-shrink: 0;
+  }
+  
+  /* Ícone do menu */
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .hamburger-icon {
+    width: 24px;
+    height: 2px;
+    background-color: #ecf0f1;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .hamburger-icon::before,
+  .hamburger-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ecf0f1;
+    transition: all 0.3s ease;
+  }
+  .hamburger-icon::before {
+    top: -6px;
+  }
+  .hamburger-icon::after {
+    top: 6px;
+  }
+  
+  .nav-toggle[aria-expanded="true"] .hamburger-icon {
+    background-color: transparent;
+  }
+  .nav-toggle[aria-expanded="true"] .hamburger-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+  }
+  .nav-toggle[aria-expanded="true"] .hamburger-icon::after {
+    transform: rotate(-45deg);
+    top: 0;
+  }
+  
+  /* Menu lateral mobile */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: block;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      background-color: #34495e;
+      width: 75%;
+      max-width: 300px;
+      height: 100%;
+      padding: 80px 20px;
+      transition: right 0.3s ease;
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+      z-index: 999;
+    }
+  
+    .main-nav.nav-open .nav-links {
+      right: 0;
+    }
+  
+    .nav-links li {
+      margin-bottom: 20px;
+    }
+  
+    .nav-link {
+      color: #ecf0f1;
+      font-size: 1.2em;
+      text-decoration: none;
+    }
+  
+    .logo {
+      font-size: 1.2em;
+    }
+  
+    .logo-img {
+      height: 1.2em;
+    }
+  }
+  

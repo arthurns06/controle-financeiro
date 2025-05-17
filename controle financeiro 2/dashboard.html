@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="imgs\coins.png" type="image/x-icon">
+    <title>Dashboard Financeiro</title>
+    <link rel="stylesheet" href="style.css"> <!-- Usaremos o mesmo CSS por enquanto -->
+    <style>
+        /* Estilos específicos para o dashboard, se necessário */
+        .dashboard-section {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .dashboard-section h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .indicator {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        #gastosCartoesContainer div {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #gastosCartoesContainer strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- index.html ou dashboard.html -->
+    <header class="site-header">
+        <div class="container header-container">
+          <a href="index.html" class="logo">
+            <img src="imgs/coins.png" alt="Logo" class="logo-img">
+            <span class="logo-text">Controle Financeiro</span>
+          </a>
+      
+          <nav class="main-nav" id="mainNav">
+            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mainNavLinks">
+              <span class="hamburger-icon"></span>
+            </button>
+            <ul class="nav-links" id="mainNavLinks">
+              <li><a href="index.html" class="nav-link">Lançamentos</a></li>
+              <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+    <main>
+        <h1>Dashboard Financeiro</h1>
+
+<section class="dashboard-section" id="filtros-section">
+    <h2>Filtros</h2>
+
+    <div class="filtros-linha"> <!-- Linha 1: Tipo de Filtro -->
+        <div class="filtro-item">
+            <label for="tipoFiltro">Tipo de Filtro:</label>
+            <select id="tipoFiltro">
+                <option value="mesAno" selected>Mês/Ano</option>
+                <option value="periodo">Período Específico</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="filtros-linha" id="filtroMesAnoContainer"> <!-- Linha 2: Mês e Ano -->
+        <div class="filtro-item">
+            <label for="mesFiltro">Mês:</label>
+            <select id="mesFiltro"></select>
+        </div>
+        <div class="filtro-item">
+            <label for="anoFiltro">Ano:</label>
+            <select id="anoFiltro"></select>
+        </div>
+    </div>
+
+    <div class="filtros-linha" id="filtroPeriodoContainer" style="display: none;"> <!-- Linha 3: Período De/Até -->
+        <div class="filtro-item">
+            <label for="dataInicioFiltro">De:</label>
+            <input type="date" id="dataInicioFiltro">
+        </div>
+        <div class="filtro-item">
+            <label for="dataFimFiltro">Até:</label>
+            <input type="date" id="dataFimFiltro">
+        </div>
+    </div>
+
+    <div class="filtros-linha"> <!-- Linha 4: Botão Aplicar -->
+        <button id="aplicarFiltro">Aplicar Filtro</button>
+    </div>
+</section>
+
+        <section class="dashboard-section" id="resumo-mes-atual">
+            <h2>Resumo do Mês Selecionado</h2>
+            <p>Total Gasto: <span id="totalGastoMes" class="indicator">R$ 0,00</span></p>
+        </section>
+
+        <section class="dashboard-section" id="gastos-por-categoria">
+            <h2>Gastos por Categoria (Mês Selecionado)</h2>
+            <canvas id="gastoPorTipoChart" width="400" height="200"></canvas>
+        </section>
+
+        <section class="dashboard-section" id="comparativo-mensal">
+            <h2>Comparativo de Gastos Mensais (Últimos 6 Meses)</h2>
+            <canvas id="comparativoMensalChart" width="400" height="200"></canvas>
+
+        </section>
+
+        <section class="dashboard-section" id="uso-cartoes">
+            <h2>Uso de Cartões (Ciclo Atual)</h2>
+            <div id="gastosCartoesContainer">
+                <p>Carregando dados dos cartões...</p>
+                <!-- Os dados dos cartões serão inseridos aqui por JS -->
+            </div>
+        </section>
+        <section class="dashboard-section" id="o-que-posso-gastar">
+            <h2>O Que Posso Gastar (Limites Disponíveis nos Cartões)</h2>
+            <p>Total Disponível nos Cartões (Ciclo Atual): <strong id="totalDisponivelCartoes" class="indicator">R$ 0,00</strong></p>
+            <div id="disponivelPorCartaoContainer">
+                <p>Calculando...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- index.html ou dashboard.html -->
+    <footer class="site-footer-minimal">
+        <div class="container">
+            <p>© 2025 / Arthur Santana</p>
+            <!-- Opcional: Pequenos links ou ícones -->
+            <!-- <div class="footer-minimal-links">
+                <a href="#">Sobre</a> • <a href="#">Contato</a>
+            </div> -->
+        </div>
+    </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const navToggle = document.querySelector('.nav-toggle');
+  const mainNav = document.querySelector('.main-nav');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  if (navToggle && mainNav) {
+    navToggle.addEventListener('click', function () {
+      const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', !isExpanded);
+      mainNav.classList.toggle('nav-open');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', false);
+      });
+    });
+  } else {
+    console.warn("navToggle ou mainNav não encontrados.");
+  }
+});
+
+  
+      </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <!-- Chart.js (para gráficos) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Seus Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="dashboard.js"></script> <!-- Novo arquivo JS para o dashboard -->
+</body>
+</html>
